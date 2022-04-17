@@ -11,14 +11,14 @@ class PublishedManager(models.Manager):
         return super(PublishedManager,self).get_queryset().filter(status='published')
 
 # post model
-
 class Post(models.Model):
     STATUS_CHOICES = (('draft', 'Draft'), ('published', 'Published'),)
 
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250, unique_for_date='publish')
     author = models.ForeignKey(User,on_delete=models.CASCADE,related_name='blog_posts')
-    body=RichTextUploadingField() 
+    body = RichTextUploadingField()
+    image = models.ImageField(upload_to='featured_image/%Y/%m/%d/')
 
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)

@@ -24,7 +24,7 @@ def post_list(request):
 
 
 def post_detail(request, post):
-    ''' Returns published post by it's slug-name. '''
+    ''' Returns particular published post by it's slug-name. '''
 
     post = get_object_or_404(Post, slug=post, status='published')
-    return render(request, 'post_detail.html', {'posts':post})
+    return render(request, 'post_detail.html', {'post':post})

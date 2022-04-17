@@ -13,9 +13,7 @@
             </p>
         </div>
         <div class="article-body">
-                {{post.body|linebreaks}}
+            {{ post.body|safe }}
         </div>
-        
     </article>
-    
 {% endblock content %}
