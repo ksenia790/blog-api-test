@@ -26,13 +26,13 @@ def post_list(request):
 
 def post_detail(request, post):
     ''' Returns particular published post by it's slug-name. '''
-
-    def post_detail(request, post):
     post = get_object_or_404(Post,slug=post,status='published')
     
     # List of active comments for this post
     comments = post.comments.filter(active=True)
     new_comment = None
+    comment_form = CommentForm(data=request.POST) #test
+
     if request.method == 'POST':
         # A comment was posted
         comment_form = CommentForm(data=request.POST)
@@ -47,7 +47,7 @@ def post_detail(request, post):
             return redirect(post.get_absolute_url()+'#'+str(new_comment.id))
         else:
             comment_form = CommentForm()
-    return render(request, 'post_detail.html',{'post':post,'comments': comments,'comment_form':comment_form})
+    return render(request, 'post_detail.html',{'post':post,'comments':comments,'comment_form':comment_form})
 
 # handling reply, reply view
 def reply_page(request):
