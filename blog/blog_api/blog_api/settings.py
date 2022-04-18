@@ -31,8 +31,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # third party
+    'rest_framework',
     'ckeditor',
     'ckeditor_uploader',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
