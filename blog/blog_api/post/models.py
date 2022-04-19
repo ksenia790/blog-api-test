@@ -46,7 +46,7 @@ class Post(models.Model):
     def get_comments(self):
         return self.comments.filter(parent=None).filter(active=True)
 
-# comment model
+# Comment model
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     name = models.CharField(max_length=50)
@@ -64,7 +64,5 @@ class Comment(models.Model):
     def __str__(self):
         return self.body
 
-
     def get_comments(self):
         return Comment.objects.filter(parent=self).filter(active=True)
-

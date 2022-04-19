@@ -1,6 +1,25 @@
 from rest_framework.serializers import ModelSerializer
-from post.models import Post
+from post.models import Post, Comment
 
+# Comment Serializers
+class CommentDetailSerializer(ModelSerializer):
+    class Meta:
+    	model = Comment
+    	fields = [
+    	    'id',
+		    'post',
+            'name',
+            'body',
+            'email',
+            'parent',
+		]
+
+class CommentListSerializer(ModelSerializer):
+    class Meta:
+    	model = Comment
+    	fields = "__all__"
+
+# Post Serializers
 
 class PostCreateSerializer(ModelSerializer):
 	class Meta:
