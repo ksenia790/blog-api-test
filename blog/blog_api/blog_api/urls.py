@@ -23,8 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('post.urls', namespace='post')),
     path('ckeditor/',include('ckeditor_uploader.urls')),
-    path('api/posts/', include('post.api.urls', namespace='post-api')),
-    path('api/comments/', include('post.api.urls', namespace='comments-api')),
-
-]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+    path('api/', include('post.api.urls', namespace='api')),
+   # path('api/comments/', include('post.api.urls', namespace='comments-api')),
+    ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
