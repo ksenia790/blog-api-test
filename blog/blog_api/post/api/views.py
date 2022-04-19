@@ -1,4 +1,7 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
+from rest_framework.pagination import (
+    LimitOffsetPagination,
+    )
 from .serializers import (
 	PostListSerializer, 
 	PostDetailSerializer, 
@@ -12,6 +15,7 @@ from post.models import Post, Comment
 class CommentDetailAPIView(RetrieveAPIView):
 	queryset = Comment.objects.all()
 	serializer_class = CommentDetailSerializer
+	lookup_field = "pk"
 
 class CommentListAPIView(ListAPIView):
 	queryset = Comment.objects.all()
@@ -32,3 +36,4 @@ class PostDetailAPIView(RetrieveAPIView):
 class PostListAPIView(ListAPIView):
 	queryset = Post.objects.all()
 	serializer_class = PostListSerializer
+	pagination_class = LimitOffsetPagination

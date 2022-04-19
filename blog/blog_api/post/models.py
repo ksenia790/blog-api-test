@@ -66,3 +66,12 @@ class Comment(models.Model):
 
     def get_comments(self):
         return Comment.objects.filter(parent=self).filter(active=True)
+
+    def children(self):
+        return Comment.objects.filter(parent=self)
+
+    @property
+    def is_parent(self):
+        if self.parent is not None:
+            return False
+        return True
