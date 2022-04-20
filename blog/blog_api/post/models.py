@@ -40,11 +40,14 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post:post_detail',args=[self.slug])
-        #return reverse('blog:post_detail',args=[self.slug])
+        
 
     # To get comment with parent is none and active is true
     def get_comments(self):
         return self.comments.filter(parent=None).filter(active=True)
+
+    def get_child_comments(self):
+        return self.comments.filter(parent=parent_id).filter(active=True)
 
 # Comment model
 class CommentManager(models.Manager):
@@ -65,6 +68,7 @@ class Comment(models.Model):
     email = models.EmailField()
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     body = models.TextField()
+    
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

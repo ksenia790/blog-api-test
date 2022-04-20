@@ -11,13 +11,20 @@ class CommentCreateSerializer(serializers.ModelSerializer):
 
 
 class CommentChildSerializer(ModelSerializer):
+	replies = SerializerMethodField()
 	class Meta:
 		model = Comment
 		fields = [
 		'id',
 		'body',
 		'created',
+		'parent',
+		'replies',
 		]
+	def get_replies(self, obj):
+		if obj.children:
+			return CommentChildSerializer(obj.children(), many=True).data
+		return None
 
 
 class CommentDetailSerializer(ModelSerializer):
@@ -45,6 +52,7 @@ class CommentDetailSerializer(ModelSerializer):
 
 
 class CommentListSerializer(ModelSerializer):
+	replies = SerializerMethodField()
 	reply_count = SerializerMethodField()
 	class Meta:
 		model = Comment
@@ -55,9 +63,15 @@ class CommentListSerializer(ModelSerializer):
 		'body',
 		'email',
 		'parent',
-		'reply_count'
+		'reply_count',
+		'replies',
 		]
-		
+
+	def get_replies(self, obj):
+		if obj.is_parent:
+			return CommentChildSerializer(obj.children(), many=True).data
+		return None
+
 	def get_reply_count(self, obj):
 		if obj.is_parent:
 			return obj.children().count()
