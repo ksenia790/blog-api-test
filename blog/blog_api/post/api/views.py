@@ -8,10 +8,16 @@ from .serializers import (
 	PostCreateSerializer, 
 	CommentDetailSerializer,
 	CommentListSerializer,
+	CommentCreateSerializer,
 	)
 from post.models import Post, Comment
 
-# Comments
+
+# Comments APIViews
+class CommentCreateAPIView(CreateAPIView):
+	queryset = Comment.objects.all()
+	serializer_class = CommentCreateSerializer
+
 class CommentDetailAPIView(RetrieveAPIView):
 	queryset = Comment.objects.all()
 	serializer_class = CommentDetailSerializer

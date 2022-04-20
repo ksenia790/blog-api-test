@@ -5,7 +5,9 @@ from .views import (
     PostCreateAPIView,
     CommentDetailAPIView,
     CommentListAPIView,
+    CommentCreateAPIView,
     )
+#from . import views
 
 app_name = 'post' 
 
@@ -15,4 +17,5 @@ urlpatterns = [
     path('posts/create/', PostCreateAPIView.as_view(), name="create"),
     path('comments/<slug:pk>/', CommentDetailAPIView.as_view(), name="thread"),
     path('posts/<slug:pk>/', PostDetailAPIView.as_view(), name="detail"),
+    path('posts/<slug:slug>/create_comment', CommentCreateAPIView.as_view(), name="post_comments"),
     ]

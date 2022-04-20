@@ -5,12 +5,12 @@ from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
 
 
-# creating model manager
+# post model
 class PublishedManager(models.Manager):
     def get_queryset(self):
         return super(PublishedManager,self).get_queryset().filter(status='published')
 
-# post model
+
 class Post(models.Model):
     STATUS_CHOICES = (('draft', 'Draft'), ('published', 'Published'),)
 
@@ -47,6 +47,18 @@ class Post(models.Model):
         return self.comments.filter(parent=None).filter(active=True)
 
 # Comment model
+class CommentManager(models.Manager):
+    def all(self):
+        qs = super(CommentManager, self).filter(parent=None)
+        return qs
+
+    def filter_by_instance(self, instance):
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        obj_id = instance.id
+        qs = super(CommentManager, self).filter(content_type=content_type, object_id= obj_id).filter(parent=None)
+        return qs
+
+
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     name = models.CharField(max_length=50)
@@ -57,6 +69,8 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
+
+    objects = CommentManager()
 
     class Meta:
         ordering = ('created',)
