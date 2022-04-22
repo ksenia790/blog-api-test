@@ -42,7 +42,7 @@ def post_detail(request, post):
     # List of active comments for particular post
     comments = post.comments.filter(active=True)
     new_comment = None
-    comment_form = CommentForm(data=request.POST) #test
+    comment_form = CommentForm(data=request.POST) 
 
     if request.method == 'POST':
 
