@@ -19,28 +19,22 @@ class Post(models.Model):
     author = models.ForeignKey(User,on_delete=models.CASCADE,related_name='blog_posts')
     body = RichTextUploadingField()
     image = models.ImageField(upload_to='featured_image/%Y/%m/%d/')
-
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    
     status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='draft')
-    
 
     class Meta:
         ordering = ('-publish',)
-    
-    
+        
     def __str__(self):
         return self.title
 
     objects = models.Manager() # The default manager.
     published = PublishedManager() # Custom manager.
 
-
     def get_absolute_url(self):
         return reverse('post:post_detail',args=[self.slug])
-        
 
     # To get comment with parent is none and active is true
     def get_comments(self):
@@ -49,6 +43,7 @@ class Post(models.Model):
     def get_child_comments(self):
         return self.comments.filter(parent=parent_id).filter(active=True)
 
+    
 # Comment model
 class CommentManager(models.Manager):
     def all(self):
@@ -68,12 +63,9 @@ class Comment(models.Model):
     email = models.EmailField()
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
     body = models.TextField()
-    
-
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
-
     objects = CommentManager()
 
     class Meta:
