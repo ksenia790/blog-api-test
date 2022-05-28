@@ -27,14 +27,6 @@ And finally run the web-server:
 
 Follow API DOCUMENTATION below.
 
-<h2 align='center'>Installing</h2>
-
-  <ol>
-    <li> clone project; </li>
-    <li> create venv, activate it and install dependencies from requirements.txt; </li>
-    <li> run server "python manage.py runserver" and follow API DOCUMENTATION below. </li>
-  </ol>
-
 <h2 align='center'>API DOCUMENTATION<h2>
 
 ## Avalible API methods for blog posts:
